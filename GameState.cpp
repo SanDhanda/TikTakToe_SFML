@@ -26,7 +26,7 @@ namespace TikTakToeGame {
 				this->_data->window.close();
 			}
 			if (this->_data->input.IsSpriteClicked(this->_pauseButton, sf::Mouse::Left, this->_data->window)) {
-				this->_data->machine.AddState(StateRef(new PauseState(_data)), true);
+				this->_data->machine.AddState(StateRef(new PauseState(_data)), false);
 			}
 		}
 	}

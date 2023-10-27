@@ -13,8 +13,6 @@ namespace TikTakToeGame {
 	PauseState::PauseState(GameDataRef data) :_data(data) {}
 
 	void PauseState::Init() {
-		gameState = STATE_PAUSED;
-		turn = PLAYER_PEICE;
 		LoadTextures();
 		SetTextures();
 		SetPositions();
@@ -30,7 +28,8 @@ namespace TikTakToeGame {
 				this->_data->machine.RemoveState();
 			}
 			if (this->_data->input.IsSpriteClicked(this->_homeButton, sf::Mouse::Left, this->_data->window)) {
-				_data->machine.AddState(StateRef(new MainMenuState(this->_data)));
+				this->_data->machine.RemoveState();
+				_data->machine.AddState(StateRef(new MainMenuState(this->_data)), true);
 			}
 		}
 	}
@@ -65,8 +64,8 @@ namespace TikTakToeGame {
 
 	void PauseState::SetPositions()
 	{
-		this->_resumeButton.setPosition(this->_data->window.getSize().x - _resumeButton.getLocalBounds().width, _resumeButton.getPosition().y + 10);
-		this->_homeButton.setPosition(this->_data->window.getSize().x - _resumeButton.getLocalBounds().width - (_homeButton.getLocalBounds().width *1.1), _homeButton.getPosition().y + 10);
+		this->_resumeButton.setPosition((this->_data->window.getSize().x / 2) - (_resumeButton.getLocalBounds().width / 2), (this->_data->window.getSize().y / 3) - (_resumeButton.getLocalBounds().width / 2));
+		this->_homeButton.setPosition((this->_data->window.getSize().x / 2) - (_homeButton.getLocalBounds().width / 2), (this->_data->window.getSize().y / 3) * 2 - (_homeButton.getLocalBounds().width / 2));
 	}
 
 }

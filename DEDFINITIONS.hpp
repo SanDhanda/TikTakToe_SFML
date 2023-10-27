@@ -24,11 +24,15 @@
 #define PAUSE_BUTTON "Resources/res/Pause Button.png"
 #define PAUSE_WINDOW "Resources/res/Pause Window.png"
 #define PAUSE_BACKGROUND "Resources/res/Pause Background.png"
+#define GAME_OVER_BACKGROUND "Resources/res/Main Menu Background.png"
 
 #define HOME_BUTTON "Resources/res/Home Button.png"
 #define SOUND_OFF_BUTTON "Resources/res/Sound Off.png"
 #define SOUND_ON_BUTTON "Resources/res/Sound On.png"
 #define RESUME_BUTTON "Resources/res/Resume Button.png"
+#define RETRY_BUTTON "Resources/res/Retry Button.png"
+
+
 
 #define STATE_PLAYING 98
 #define STATE_PAUSED 97
