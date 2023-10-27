@@ -10,14 +10,14 @@
 #define MAIN_MENU_PLAY_BUTTON_OUTER "Resources/res/Play Button Outer.png"
 
 #define GAME_BACKGROUND_FILEPATH "Resources/res/Main Menu Background.png"
-#define GAME_GRID "Resources/res/Grid.png"
+#define GAME_GRID_FILEPATH "Resources/res/Grid.png"
 #define O_FILEPATH "Resources/res/O.png"
 #define X_FILEPATH "Resources/res/X.png"
 #define X 1
 #define O 0
 #define EMPTY -1
-#define PLAYER_PEICE X
-#define AI_PEICE O
+#define PLAYER_PIECE X
+#define AI_PIECE O
 #define O_WIN_FILEPATH "Resources/res/O Win.png"
 #define X_WIN_FILEPATH "Resources/res/X Win.png"
 
@@ -41,4 +41,6 @@
 #define STATE_PLACING_PEICE 94
 #define STATE_AI_PLAYING 93
 #define STATE_DRAW 92
+
+#define TIME_BEFORE_SHOWING_GAME_OVER 3
 

@@ -2,6 +2,7 @@
 #include "State.hpp"
 #include <SFML/Graphics.hpp>
 #include "Game.hpp"
+#include "AI.hpp"
 
 namespace TikTakToeGame {
 
@@ -19,12 +20,31 @@ namespace TikTakToeGame {
 		sf::Clock _clock;
 		sf::Sprite _background;
 		sf::Sprite _pauseButton;
+		sf::Sprite _gridSprite;
+		sf::Sprite _gridPieces[3][3];
+		int gridArray[3][3];
 		int turn;
 		int gameState;
+		AI* ai;
 
 		void LoadTextures();
 		void SetTextures();
 		void SetPositions();
+		void CheckAndPlacePiece();
+		void CheckForWin(int turn);
+		void Check3PeicesForMatch(int x1, int y1, int x2, int y2, int x3, int y3, int pieceToCheck);
+
+		void InitGridPieces();
+		void SetGridToEmpty();
+		void DrawGridPieces();
+		int GetColumn(sf::Vector2f gridLocalTouchPos, sf::Vector2f gridSectionSize, sf::FloatRect gridSize);
+		int GetRow(sf::Vector2f gridLocalTouchPos, sf::Vector2f gridSectionSize, sf::FloatRect gridSize);
+		void SetPlayerPiece(int column, int row);
+		void SetAIPiece(int column, int row);
+		bool IsGameDrawn(int emptyNum);
+		bool IsGameOver();
+
+		void CheckPieces(int playerTurn);
 
 	};
 }

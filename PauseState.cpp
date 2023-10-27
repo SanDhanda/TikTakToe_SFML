@@ -3,7 +3,7 @@
 #include "MainMenuState.h"
 #include "GameState.hpp"
 #include <sstream>
-#include "DEDFINITIONS.hpp"
+#include "DEFINITIONS.hpp"
 #include <iostream>
 
 
