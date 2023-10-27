@@ -1,7 +1,7 @@
 #include "StateMachine.hpp"
 
 namespace TikTakToeGame {
-
+	
 	void StateMachine::AddState(StateRef newState, bool isReplacing) {
 		this->_isAdding = true;
 		this->_isReplacing = isReplacing;
@@ -31,13 +31,14 @@ namespace TikTakToeGame {
 			
 				else {
 					this->_states.top()->Pause();
-				}
+				} 
 			}
+			this->_states.push(std::move(this->_newState));
+			this->_states.top()->Init();
+			this->_isAdding = false;
 		}
 		//push new state and initialise the top
-		this->_states.push(std::move(this->_newState));
-		this->_states.top()->Init();
-		this->_isAdding = false;
+		
 	}
 
 	StateRef& StateMachine::GetActiveState() {

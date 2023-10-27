@@ -1,8 +1,9 @@
 #include <iostream>
-#include "Game.h"
+#include "Game.hpp"
+#include "DEDFINITIONS.hpp"
 
 int main()
 {
-	TikTakToeGame::Game(800, 600, "SFML Starter");
+	TikTakToeGame::Game(SCREEN_WIDTH, SCREEN_HEIGHT, "Tik-Tak-Toe");
 	return EXIT_SUCCESS;
 }

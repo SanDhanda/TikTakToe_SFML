@@ -2,6 +2,12 @@
 
 
 namespace TikTakToeGame {
+	AssetManager::AssetManager()
+	{
+	}
+	AssetManager::~AssetManager()
+	{
+	}
 	void AssetManager::LoadTexture(std::string name, std::string fileName) {
 		sf::Texture tex;
 
@@ -11,6 +17,7 @@ namespace TikTakToeGame {
 	}
 
 	sf::Texture& AssetManager::GetTexture(std::string name){
+		sf::Texture s = this->_textures.at(name);
 		return this->_textures.at(name);
 	}
 
