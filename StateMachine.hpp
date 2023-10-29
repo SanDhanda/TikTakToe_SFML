@@ -20,12 +20,17 @@ namespace TikTakToeGame {
 
 		StateRef &GetActiveState();
 
+		void SetIsSinglePlayer(bool isSinglePlayer);
+		bool GetIsSinglePlayer();
+
 	private:
 		std::stack<StateRef> _states;
 		StateRef _newState;
 
 		bool _isRemoving;
 		bool _isAdding, _isReplacing;
+
+		bool _isSinglePlayer;
 
 
 

@@ -29,7 +29,7 @@ namespace TikTakToeGame {
 			}
 			for (int i = 0; i < checkMatchVector.size(); i++) {
 				CheckSection(checkMatchVector[i][0], checkMatchVector[i][1], checkMatchVector[i][2], checkMatchVector[i][3], checkMatchVector[i][4], checkMatchVector[i][5],
-					PLAYER_PIECE, gridArray, gridPieces);
+					PLAYER_ONE_PIECE, gridArray, gridPieces);
 			}
 			//isCentre is empty
 			CheckIfPieceIsEmpty(1, 1, gridArray, gridPieces);

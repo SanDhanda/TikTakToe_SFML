@@ -45,4 +45,14 @@ namespace TikTakToeGame {
 		return this->_states.top();
 	}
 
+	void StateMachine::SetIsSinglePlayer(bool isSinglePlayer)
+	{
+		this->_isSinglePlayer = isSinglePlayer;
+	}
+
+	bool StateMachine::GetIsSinglePlayer()
+	{
+		return this->_isSinglePlayer;
+	}
+
 }

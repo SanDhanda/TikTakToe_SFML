@@ -19,7 +19,12 @@ namespace TikTakToeGame {
 		sf::Clock _clock;
 		sf::Sprite _background;
 		sf::Sprite _playButton;
-		sf::Sprite _playButtonOuter; 
+		sf::Sprite _playButtonOuterOne; 
+		sf::Sprite _playButtonOuterTwo; 
+
+		sf::Sprite _singlePlayerButton;
+		sf::Sprite _twoPlayerButton;
+
 		sf::Sprite _title;
 
 		void LoadTextures();

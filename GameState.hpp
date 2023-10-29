@@ -25,14 +25,18 @@ namespace TikTakToeGame {
 		int gridArray[3][3];
 		int turn;
 		int gameState;
+		bool singlePlayer;
 		AI* ai;
 
 		void LoadTextures();
 		void SetTextures();
 		void SetPositions();
-		void CheckAndPlacePiece();
-		void CheckForWin(int turn);
-		void Check3PeicesForMatch(int x1, int y1, int x2, int y2, int x3, int y3, int pieceToCheck);
+		void CheckAndPlacePiece(bool isSinglePlayer);
+		void CheckAndPlacePiece_SinglePlayer(int column, int row);
+		void CheckAndPlacePiece_TwoPlayer(int column, int row);
+
+		void CheckForWin(int turn, bool isSinglePlayer);
+		void Check3PeicesForMatch(int x1, int y1, int x2, int y2, int x3, int y3, int pieceToCheck, bool isSinglePlayer);
 
 		void InitGridPieces();
 		void SetGridToEmpty();
@@ -44,7 +48,7 @@ namespace TikTakToeGame {
 		bool IsGameDrawn(int emptyNum);
 		bool IsGameOver();
 
-		void CheckPieces(int playerTurn);
+		void CheckPieces(int playerTurn, bool isSinglePlayer);
 
 	};
 }

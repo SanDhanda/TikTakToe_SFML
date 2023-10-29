@@ -7,6 +7,8 @@
 #define MAIN_MENU_BACKGROUND_FILEPATH "Resources/res/Main Menu Background.png"
 #define MAIN_MENU_TITLE_PATH "Resources/res/Game Title.png"
 #define MAIN_MENU_PLAY_BUTTON "Resources/res/Play Button.png"
+#define MAIN_MENU_SINGLE_PLAYER_BUTTON "Resources/res/singlePlayerButton.png"
+#define MAIN_MENU_TWO_PLAYER_BUTTON "Resources/res/Play Button.png"
 #define MAIN_MENU_PLAY_BUTTON_OUTER "Resources/res/Play Button Outer.png"
 
 #define GAME_BACKGROUND_FILEPATH "Resources/res/Main Menu Background.png"
@@ -16,7 +18,8 @@
 #define X 1
 #define O 0
 #define EMPTY -1
-#define PLAYER_PIECE X
+#define PLAYER_ONE_PIECE X
+#define PLAYER_TWO_PIECE O
 #define AI_PIECE O
 #define O_WIN_FILEPATH "Resources/res/O Win.png"
 #define X_WIN_FILEPATH "Resources/res/X Win.png"
@@ -32,7 +35,8 @@
 #define RESUME_BUTTON "Resources/res/Resume Button.png"
 #define RETRY_BUTTON "Resources/res/Retry Button.png"
 
-
+#define SINGLE_PLAYER 1
+#define TWO_PLAYER 0
 
 #define STATE_PLAYING 98
 #define STATE_PAUSED 97

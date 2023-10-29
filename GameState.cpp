@@ -13,8 +13,9 @@ namespace TikTakToeGame {
 	GameState::GameState(GameDataRef data) :_data(data) {}
 
 	void GameState::Init() {
+		
 		gameState = STATE_PLAYING;
-		turn = PLAYER_PIECE;
+		turn = PLAYER_ONE_PIECE;
 		this->ai = new AI(turn, this->_data);
 		LoadTextures();
 		SetTextures();
@@ -74,7 +75,14 @@ namespace TikTakToeGame {
 			}
 			else if (this->_data->input.IsSpriteClicked(this->_gridSprite, sf::Mouse::Left, this->_data->window)) {
 				if (STATE_PLAYING == gameState) {
-					this->CheckAndPlacePiece();
+					if (this->_data->machine.GetIsSinglePlayer()) {
+						std::cout << "single player" << std::endl;
+						this->CheckAndPlacePiece(true);
+					}
+					else {
+						std::cout << "two player" << std::endl;
+						this->CheckAndPlacePiece(false);
+					}
 				}
 
 			}
@@ -106,24 +114,55 @@ namespace TikTakToeGame {
 		}
 	}
 
-	
-
-	void GameState::CheckAndPlacePiece() {
+	void GameState::CheckAndPlacePiece(bool isSinglePlayer) {
 		sf::Vector2i touchpoint = this->_data->input.GetMousePosition(this->_data->window);
 		sf::FloatRect gridSize = _gridSprite.getGlobalBounds();
-		sf::Vector2f gapOutsideOfGrid = sf::Vector2f((SCREEN_WIDTH - gridSize.width)/2, (SCREEN_HEIGHT - gridSize.height)/2);
+		sf::Vector2f gapOutsideOfGrid = sf::Vector2f((SCREEN_WIDTH - gridSize.width) / 2, (SCREEN_HEIGHT - gridSize.height) / 2);
 		sf::Vector2f gridLocalTouchPos = sf::Vector2f(touchpoint.x - gapOutsideOfGrid.x, touchpoint.y - gapOutsideOfGrid.y);
 		sf::Vector2f gridSectionSize = sf::Vector2f(gridSize.width / 3, gridSize.height / 3);
-		
+
 		int column = GetColumn(gridLocalTouchPos, gridSectionSize, gridSize);
 		int row = GetRow(gridLocalTouchPos, gridSectionSize, gridSize);
-		
+
+
+		if (isSinglePlayer) {
+			CheckAndPlacePiece_SinglePlayer(column, row);
+		}
+		else {
+			CheckAndPlacePiece_TwoPlayer(column, row);
+		}
+
+	}
+
+	void GameState::CheckAndPlacePiece_SinglePlayer(int column, int row) {
+
+
 		if (gridArray[column - 1][row - 1] == EMPTY) {
 			gridArray[column - 1][row - 1] = turn;
-			if (PLAYER_PIECE == turn) {
+			if (PLAYER_ONE_PIECE == turn) {
 				_gridPieces[column - 1][row - 1].setTexture(this->_data->assets.GetTexture("X Piece"));
-				this->CheckForWin(turn);
-				
+				this->CheckForWin(turn, true);
+			}
+			_gridPieces[column - 1][row - 1].setColor(sf::Color(255, 255, 255, 255));
+		}
+
+	}
+
+	void GameState::CheckAndPlacePiece_TwoPlayer(int column, int row) {
+		
+
+		if (gridArray[column - 1][row - 1] == EMPTY) {
+			gridArray[column - 1][row - 1] = turn;
+			if (PLAYER_ONE_PIECE == turn) {
+				_gridPieces[column - 1][row - 1].setTexture(this->_data->assets.GetTexture("X Piece"));
+				this->CheckForWin(turn, false);
+				turn = PLAYER_TWO_PIECE;
+
+			}
+			else if (PLAYER_TWO_PIECE == turn) {
+				_gridPieces[column - 1][row - 1].setTexture(this->_data->assets.GetTexture("O Piece"));
+				this->CheckForWin(turn, false);
+				turn = PLAYER_ONE_PIECE;
 			}
 			_gridPieces[column - 1][row - 1].setColor(sf::Color(255, 255, 255, 255));
 		}
@@ -156,24 +195,26 @@ namespace TikTakToeGame {
 		}
 	}
 
-	void GameState::CheckPieces(int playerTurn) {
-		Check3PeicesForMatch(0, 0, 1, 0, 2, 0, playerTurn);
-		Check3PeicesForMatch(0, 1, 1, 1, 2, 1, playerTurn);
-		Check3PeicesForMatch(0, 2, 1, 2, 2, 2, playerTurn);
-		Check3PeicesForMatch(0, 0, 0, 1, 0, 2, playerTurn);
-		Check3PeicesForMatch(1, 0, 1, 1, 1, 2, playerTurn);
-		Check3PeicesForMatch(2, 0, 2, 1, 2, 2, playerTurn);
-		Check3PeicesForMatch(0, 0, 1, 1, 2, 2, playerTurn);
-		Check3PeicesForMatch(0, 2, 1, 1, 2, 0, playerTurn);
+	void GameState::CheckPieces(int playerTurn, bool isSinglePlayer) {
+		Check3PeicesForMatch(0, 0, 1, 0, 2, 0, playerTurn, isSinglePlayer);
+		Check3PeicesForMatch(0, 1, 1, 1, 2, 1, playerTurn, isSinglePlayer);
+		Check3PeicesForMatch(0, 2, 1, 2, 2, 2, playerTurn, isSinglePlayer);
+		Check3PeicesForMatch(0, 0, 0, 1, 0, 2, playerTurn, isSinglePlayer);
+		Check3PeicesForMatch(1, 0, 1, 1, 1, 2, playerTurn, isSinglePlayer);
+		Check3PeicesForMatch(2, 0, 2, 1, 2, 2, playerTurn, isSinglePlayer);
+		Check3PeicesForMatch(0, 0, 1, 1, 2, 2, playerTurn, isSinglePlayer);
+		Check3PeicesForMatch(0, 2, 1, 1, 2, 0, playerTurn, isSinglePlayer);
 	}
 
-	void GameState::CheckForWin(int turn) {
-		CheckPieces(turn);
+	void GameState::CheckForWin(int turn, bool isSinglePlayer) {
+		CheckPieces(turn, true);
 
-		if (STATE_WON != gameState) {
-			gameState = STATE_AI_PLAYING;
-			ai->PlacePiece(&gridArray, _gridPieces, &gameState);
-			CheckPieces(AI_PIECE);
+		if (isSinglePlayer) {
+			if (STATE_WON != gameState) {
+				gameState = STATE_AI_PLAYING;
+				ai->PlacePiece(&gridArray, _gridPieces, &gameState);
+				CheckPieces(AI_PIECE, true);
+			}
 		}
 
 		int emptyNum = 9;
@@ -184,7 +225,7 @@ namespace TikTakToeGame {
 				}
 			}
 		}
-		if (IsGameDrawn(emptyNum) ){
+		if (IsGameDrawn(emptyNum)) {
 			gameState = STATE_DRAW;
 			std::cout << "Game Drawn" << std::endl;
 		}
@@ -194,28 +235,37 @@ namespace TikTakToeGame {
 		}
 	}
 
+	void GameState::Check3PeicesForMatch(int x1, int y1, int x2, int y2, int x3, int y3, int pieceToCheck, bool isSinglePlayer) {
 
-	void GameState::Check3PeicesForMatch(int x1, int y1, int x2, int y2, int x3, int y3, int pieceToCheck) {
-		
 		if (pieceToCheck == gridArray[x1][y1] && pieceToCheck == gridArray[x2][y2] && pieceToCheck == gridArray[x3][y3]) {
 			std::string winningPieceStr;
 			if (O == pieceToCheck) {
 				winningPieceStr = "O Win Piece";
 			}
-			else{
+			else {
 				winningPieceStr = "X Win Piece";
 			}
 			_gridPieces[x1][y1].setTexture(this->_data->assets.GetTexture(winningPieceStr));
 			_gridPieces[x2][y2].setTexture(this->_data->assets.GetTexture(winningPieceStr));
 			_gridPieces[x3][y3].setTexture(this->_data->assets.GetTexture(winningPieceStr));
 
-			if (PLAYER_PIECE == pieceToCheck) {
+			if (PLAYER_ONE_PIECE == pieceToCheck) {
 				gameState = STATE_WON;
-				std::cout << "WINNER" << std::endl;
+				if (isSinglePlayer) {
+					std::cout << "WINNER" << std::endl;
+				}
+				else {
+					std::cout << "PLAYER 1 WINS" << std::endl;
+				}
 			}
 			else {
 				gameState = STATE_LOSE;
-				std::cout << "LOSER" << std::endl;
+				if (isSinglePlayer) {
+					std::cout << "LOSER" << std::endl;
+				}
+				else {
+					std::cout << "PLAYER 2 WINS" << std::endl;
+				}
 
 			}
 		}
@@ -228,5 +278,5 @@ namespace TikTakToeGame {
 	bool GameState::IsGameOver() {
 		return gameState == STATE_WON || gameState == STATE_DRAW || gameState == STATE_LOSE;
 	}
-	
+
 }
