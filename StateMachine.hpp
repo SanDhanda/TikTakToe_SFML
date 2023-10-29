@@ -32,6 +32,8 @@ namespace TikTakToeGame {
 
 		bool _isSinglePlayer;
 
+		int _winner;
+
 
 
 	};

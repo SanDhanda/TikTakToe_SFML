@@ -13,7 +13,7 @@ namespace TikTakToeGame {
 	GameState::GameState(GameDataRef data) :_data(data) {}
 
 	void GameState::Init() {
-		
+
 		gameState = STATE_PLAYING;
 		turn = PLAYER_ONE_PIECE;
 		this->ai = new AI(turn, this->_data);
@@ -92,7 +92,8 @@ namespace TikTakToeGame {
 	void GameState::Update(float dt) {
 		if (IsGameOver()) {
 			if (this->_clock.getElapsedTime().asSeconds() > TIME_BEFORE_SHOWING_GAME_OVER) {
-				this->_data->machine.AddState(StateRef(new GameOverState(_data)), true);
+				std::cout << gameState << std::endl;
+				this->_data->machine.AddState(StateRef(new GameOverState(_data, gameState)), true);
 			}
 		}
 	}
@@ -149,7 +150,7 @@ namespace TikTakToeGame {
 	}
 
 	void GameState::CheckAndPlacePiece_TwoPlayer(int column, int row) {
-		
+
 
 		if (gridArray[column - 1][row - 1] == EMPTY) {
 			gridArray[column - 1][row - 1] = turn;
@@ -207,14 +208,18 @@ namespace TikTakToeGame {
 	}
 
 	void GameState::CheckForWin(int turn, bool isSinglePlayer) {
-		CheckPieces(turn, true);
+		
 
 		if (isSinglePlayer) {
-			if (STATE_WON != gameState) {
+			CheckPieces(turn, true);
+			if (STATE_PLAYER_ONE_WON != gameState) {
 				gameState = STATE_AI_PLAYING;
 				ai->PlacePiece(&gridArray, _gridPieces, &gameState);
 				CheckPieces(AI_PIECE, true);
 			}
+		}
+		else {
+			CheckPieces(turn, false);
 		}
 
 		int emptyNum = 9;
@@ -250,7 +255,7 @@ namespace TikTakToeGame {
 			_gridPieces[x3][y3].setTexture(this->_data->assets.GetTexture(winningPieceStr));
 
 			if (PLAYER_ONE_PIECE == pieceToCheck) {
-				gameState = STATE_WON;
+				gameState = STATE_PLAYER_ONE_WON;
 				if (isSinglePlayer) {
 					std::cout << "WINNER" << std::endl;
 				}
@@ -259,11 +264,12 @@ namespace TikTakToeGame {
 				}
 			}
 			else {
-				gameState = STATE_LOSE;
 				if (isSinglePlayer) {
+					gameState = STATE_LOSE;
 					std::cout << "LOSER" << std::endl;
 				}
 				else {
+					gameState = STATE_PLAYER_TWO_WON;
 					std::cout << "PLAYER 2 WINS" << std::endl;
 				}
 
@@ -272,11 +278,11 @@ namespace TikTakToeGame {
 	}
 
 	bool GameState::IsGameDrawn(int emptyNum) {
-		return emptyNum == 0 && STATE_WON != gameState && STATE_LOSE != gameState;
+		return emptyNum == 0 && STATE_PLAYER_ONE_WON != gameState && STATE_PLAYER_TWO_WON != gameState && STATE_LOSE != gameState;
 	}
 
 	bool GameState::IsGameOver() {
-		return gameState == STATE_WON || gameState == STATE_DRAW || gameState == STATE_LOSE;
+		return gameState == STATE_PLAYER_ONE_WON || gameState == STATE_PLAYER_TWO_WON || gameState == STATE_DRAW || gameState == STATE_LOSE;
 	}
 
 }

@@ -8,7 +8,7 @@ namespace TikTakToeGame {
 	class GameOverState : public State
 	{
 	public:
-		GameOverState(GameDataRef data);
+		GameOverState(GameDataRef data, int resultState);
 		void Init();
 		void HandleInput();
 		void Update(float dt);
@@ -21,10 +21,14 @@ namespace TikTakToeGame {
 		sf::Sprite _homeButton;
 		sf::Sprite _retryButton;
 
+		sf::Sprite _message;
+
+		int _resultState;
+
 		void LoadTextures();
 		void SetTextures();
 		void SetPositions();
-
+		void SetBackgroundColour();
 	};
 }
 

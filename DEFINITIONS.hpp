@@ -35,16 +35,23 @@
 #define RESUME_BUTTON "Resources/res/Resume Button.png"
 #define RETRY_BUTTON "Resources/res/Retry Button.png"
 
+
+#define GAME_OVER_PLAYER_ONE_WINS "Resources/res/Player1Wins.png"
+#define GAME_OVER_PLAYER_TWO_WINS "Resources/res/Player2Wins.png"
+#define GAME_OVER_LOSER "Resources/res/Loser.png"
+#define GAME_OVER_DRAW "Resources/res/Draw.png"
+
 #define SINGLE_PLAYER 1
 #define TWO_PLAYER 0
 
 #define STATE_PLAYING 98
 #define STATE_PAUSED 97
-#define STATE_WON 96
-#define STATE_LOSE 95
-#define STATE_PLACING_PEICE 94
-#define STATE_AI_PLAYING 93
-#define STATE_DRAW 92
+#define STATE_PLAYER_ONE_WON 96
+#define STATE_PLAYER_TWO_WON 95
+#define STATE_LOSE 94
+#define STATE_PLACING_PEICE 93
+#define STATE_AI_PLAYING 92
+#define STATE_DRAW 91
 
 #define TIME_BEFORE_SHOWING_GAME_OVER 3
 
